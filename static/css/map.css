@@ -1,0 +1,19 @@
+html, body, #map {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#map {
+  border-style: solid;
+  border-width: medium;
+  border-color: grey;
+  font-family: arial;
+  top: 4%;
+}
+
+#title {
+  color: white;
+  text-shadow: 2px black;
+  background-color: #5D8AA8;
+}
