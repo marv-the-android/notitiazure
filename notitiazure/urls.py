@@ -19,6 +19,5 @@ from mainmap.views import mainMap
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('map/', mainMap),
-    path('', mainMap)
+    path('map/', mainMap)
 ]
