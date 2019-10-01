@@ -24,8 +24,9 @@ SECRET_KEY = '0f--+j##=2+)0^wa8v)vn#4ln16kp^lx%n5nj@0&hzy11qsn65'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['notitiazure.azurewebsites.net'],
+ALLOWED_HOSTS = (
+    'notitiazure.azurewebsites.net',
+)
 
 
 # Application definition
