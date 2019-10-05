@@ -54,10 +54,17 @@
         }).addTo(map);
         map.setView([0, 0], 0);
         map.setMaxBounds(  [[-90,-180],   [90,180]]  )
-
-        L.geoJSON(quakes.responseJSON, {
+        var geolayer = L.geoJSON(quakes.responseJSON, {
           onEachFeature: onEachFeature
-        }).addTo(map);
+        });
+        geolayer.addTo(map);
+        var baseLayers = {
+            "Satellite": map,
+        };
+        var overlays = {
+            "Earthquakes": geolayer,
+        };
+        L.control.layers(baseLayers, overlays).addTo(map);
       });
     </script>
   </body>
