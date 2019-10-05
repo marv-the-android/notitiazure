@@ -31,8 +31,8 @@
     <script>
       function onEachFeature(feature, layer) {
         // does this feature have a property named popupContent?
-        if (feature.properties && feature.properties.location) {
-          layer.bindPopup(feature.properties.location + "<br>Magnitude: " + feature.properties.mag);
+        if (feature.properties && feature.properties.place) {
+          layer.bindPopup(feature.properties.place + "<br>Magnitude: " + feature.properties.mag);
         }
       }
 
