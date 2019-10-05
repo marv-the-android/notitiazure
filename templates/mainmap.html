@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="{% static 'css/map.css' %}">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <title>Map</title>
@@ -29,14 +29,36 @@
       </div>
     </div>
     <script>
-      var map = L.map('map', {
-        minZoom: 3
+      function onEachFeature(feature, layer) {
+        // does this feature have a property named popupContent?
+        if (feature.properties && feature.properties.location) {
+          layer.bindPopup(feature.properties.location + "<br>Magnitude: " + feature.properties.mag);
+        }
+      }
+
+      var quakes = $.ajax({
+        url:"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson",
+        dataType: "json",
+        success: console.log("Data successfully loaded."),
+        error: function (xhr) {
+          alert(xhr.statusText)
+        }
+      })
+
+      $.when(quakes).done(function() {
+        var map = L.map('map', {
+          minZoom: 3
+        });
+        L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=yGKLWfmwLwdWW69PecgS', {
+          attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
+        }).addTo(map);
+        map.setView([0, 0], 0);
+        map.setMaxBounds(  [[-90,-180],   [90,180]]  )
+
+        L.geoJSON(quakes.responseJSON, {
+          onEachFeature: onEachFeature
+        }).addTo(map);
       });
-      L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=yGKLWfmwLwdWW69PecgS', {
-        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
-      }).addTo(map);
-      map.setView([0, 0], 0);
-      map.setMaxBounds(  [[-90,-180],   [90,180]]  )
     </script>
   </body>
 </html>
