@@ -58,8 +58,13 @@
           onEachFeature: onEachFeature
         });
         geolayer.addTo(map);
+        var streets = L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=VZszJYT1INkK3AxXVH26', {
+          attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
+        });
+        streets.addTo(map);
         var baseLayers = {
             "Satellite": map,
+            "Streets": streets,
         };
         var overlays = {
             "Earthquakes": geolayer,
